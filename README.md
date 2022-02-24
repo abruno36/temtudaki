@@ -1,14 +1,20 @@
-# Entity Framework Core parte 1: App MVC .NET CORE 3.1 
+# REACT NATIVE - EXPO 
 
 > ## Informações
 >
 > **Objetivo:**     
 >
-> O objetivo desta aplicação foi a criação de uma loja virtual de tortas com tecnologias avançadas em RAZOR - Model Binding - Form Tag Helpers - Identity (Authentication and authorization) 
+> O objetivo desta aplicação foi a criação de um aplicativo para efetuar cadastro (adm) ou compra (usuario) de produtos ou serviços 
 ---
-> **Classe Principal:** considerada a classe independente da relação.
+> **Controle de Projeto:**     
 >
-> **Classe Dependente:** classe dependente da relação, ou "classe filha". É nela que reside a chave estrangeira.
+> TRELLO -  https://trello.com/b/KX2DKysi/temtudaki
+---
+> **Prototipação:**     
+>
+> MARVELAPP -  https://marvelapp.com/prototype/16icb12e
+---
+**Classe Dependente:** 
 
 <img src="https://github.com/abruno36/BethanysPieShop-MVC/blob/master/BethanysPieShop/wwwroot/Images/bethanylogo.png" alt="Logo Bethany"/>
 
@@ -33,14 +39,15 @@
 
 > ## Tecnologias
 >
-> **Frameworks:**  
-> - **Entity Framework CORE 4.7 **  
+> **Plataformas:**  
+> - **react-native 2.0 **  
 >
-> **Tipo de Banco de dados:**  
-> - **SQL Server**
-
+> - **NODE js - 16.14.0**
 >
-
+> - **NPM - 8.3.1**
+>
+> - **IDE - Visual Code**
+>
 ---
 
 
