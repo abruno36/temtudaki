@@ -19,16 +19,7 @@
 <img src="https://github.com/abruno36/BethanysPieShop-MVC/blob/master/BethanysPieShop/wwwroot/Images/bethanylogo.png" alt="Logo Bethany"/>
 
 > **Tecnologias:** que estão envolvidas nessa aplicação de exemplo como **Framework Web, Aspnet MVC versão Core**, como persistência: **Entity Framework Core** também. A parte de segurança tem o **login, logout**, registros de usuários, a gente está usando a **Identity**, apresentação das páginas HTML está sendo feita através do **RAZOR** que é a engine padrão do Aspnet MVC.
->
-<img src="https://github.com/abruno36/BethanysPieShop-MVC/blob/master/BethanysPieShop/wwwroot/Images/CenarioAPP.png" alt="Cenário geral"/>
->
-<img src="https://github.com/abruno36/BethanysPieShop-MVC/blob/master/BethanysPieShop/wwwroot/Images/Identity.png" alt="Fluxo Base"/>
->
->
-<img src="https://github.com/abruno36/AluraWebAPI/blob/master/Alura.WebAPI.WebApp/wwwroot/images/ModeloDesign1.png" alt="Fluxo Base"/>
->   
->
-<img src="https://github.com/abruno36/AluraWebAPI/blob/master/Alura.WebAPI.WebApp/wwwroot/images/ModeloDesign2.png" alt="Fluxo Base"/>
+
 >
 > ## Nível Criticidade
 > - [x] - Alto  
