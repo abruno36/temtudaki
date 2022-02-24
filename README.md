@@ -31,7 +31,7 @@
 > ## Tecnologias
 >
 > **Plataformas:**  
-> - **react-native 2.0 **  
+> - **REACT-NATIVE 2.0**  
 >
 > - **NODE js - 16.14.0**
 >
