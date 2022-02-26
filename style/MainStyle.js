@@ -7,6 +7,10 @@ const styles = StyleSheet.create({
     cancelButton: {
       backgroundColor: "#c00"
     },
+    checkboxContainer: {
+      marginTop: 40,
+      
+    },
     container: {
       flex: 1,
       backgroundColor: '#ddd',
@@ -17,13 +21,20 @@ const styles = StyleSheet.create({
       flexGrow: 1,
       height: 40,
       fontSize: 18,
-      borderBottomColor: "#999",
+      borderBottomColor: "#888",
       borderBottomWidth: 1,
       borderStyle: "solid",
       alignSelf: "flex-start"
     },
     containerMask: {
       flexDirection: "row",
+      marginBottom: 5,
+      marginLeft: 10,
+      marginRight: 10
+    },
+    containerMaskFone: {
+      flexDirection: "row",
+      marginTop: 20,
       marginBottom: 5,
       marginLeft: 10,
       marginRight: 10

@@ -2,24 +2,71 @@ import React, { useState } from "react";
 import { StyleSheet, View, StatusBar } from "react-native";
 import { Input, Text, Button } from "react-native-elements";
 import { Icon } from "react-native-vector-icons/FontAwesome";
+import { KeyboardAvoidingView } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import styles from '../style/MainStyle';
 
 export default function Login({navigation}) {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+  const [errorEmail, setErrorEmail] = useState(null);
+  const [errorPassword, setErrorPassword] = useState(null);
+
+  const [isLoading, setLoading] = useState(false);
+
+  const [visibleDialog, setVisibleDialog] = useState(false);
+  const [titulo, setTitulo] = useState(null);
+  const [mensagem, setMensagem] = useState(null);
+  const [tipo, setTipo] = useState(null);
+
+  const showDialog = (titulo, mensagem, tipo) => {
+    setVisibleDialog(true);
+    setTitulo(titulo);
+    setMensagem(mensagem);
+    setTipo(tipo);
+  };
+
+  const validar = () => {
+    let error = false;
+    setErrorEmail(null);
+    setErrorPassword(null);
+    
+    const re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!re.test(String(email).toLowerCase())) {
+      setErrorEmail("Preencha seu E-MAIL corretamente");
+      error = true;
+    }
+    if (password == null) {
+      setErrorPassword("Preencha sua PASSWORD corretamente");
+      error = true;
+    }
+
+    return !error;
+  };
+  
   const entrar = () => {
-      navigation.reset({
+    if (validar()) {
+        navigation.reset({
         index: 0,
         routes: [{name: "Principal"}]
       })
+    }
   }
 
   const cadastrar = () => {
-    navigation.navigate("Cadastro")
+    if (validar()) {
+      navigation.navigate("Cadastro")
+    }
   }
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS == "ios" ? "padding" : "height"}
+      style={[styles.container, specificStyle.specificContainer]}
+      keyboardVerticalOffset={80}
+    >
+      <ScrollView style={{ width: "100%" }}>
        <StatusBar
             barStyle = "light-content"
             hidden = {false}
@@ -32,17 +79,17 @@ export default function Login({navigation}) {
         Entrar no TemTudaki
       </Text>
       <Input
-        placeholder=" email@address.com.br"
+        placeholder=" E-mail"
         keyboardType="email-address"
-        leftIcon={{ type: "font-awesome", name: "envelope" }}
         onChangeText={(value) => setEmail(value)}
+        errorMessage={errorEmail}
       />
 
       <Input
         placeholder=" Sua senha"
         secureTextEntry={true}
-        leftIcon={{ type: "font-awesome", name: "lock" }}
         onChangeText={(value) => setPassword(value)}
+        errorMessage={errorPassword}
       />
 
       <Button
@@ -64,7 +111,7 @@ export default function Login({navigation}) {
         }}
         containerStyle={{
           width: 200,
-          marginHorizontal: 50,
+          marginHorizontal: 85,
           marginVertical: 10,
         }}
       />
@@ -88,10 +135,22 @@ export default function Login({navigation}) {
         }}
         containerStyle={{
           width: 200,
-          marginHorizontal: 50,
+          marginHorizontal: 85,
           marginVertical: 10,
         }}
       />
-    </View>
+     </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
+
+const specificStyle = StyleSheet.create({
+  specificContainer: {
+    backgroundColor: "#ddd",
+    padding: 10,
+  },
+  button: {
+    width: "100%",
+    marginTop: 10,
+  },
+});
