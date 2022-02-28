@@ -213,9 +213,9 @@ export default function Cadastro({ navigation }) {
           />
         )}
 
-          { visibleDialog && 
+        { visibleDialog && 
             <CustomDialog titulo={titulo} mensagem={mensagem} tipo={tipo} visible={visibleDialog} onClose={hideDialog}></CustomDialog>
-          }
+        }
       </ScrollView>
     </KeyboardAvoidingView>
   );
