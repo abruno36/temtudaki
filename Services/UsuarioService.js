@@ -1,3 +1,6 @@
+import axios from "axios"
+import Config from "../util/Config"
+
 class UsuarioService{
     async cadastrar(data){
         return axios({

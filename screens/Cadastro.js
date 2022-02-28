@@ -5,17 +5,20 @@ import { KeyboardAvoidingView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { TextInputMask } from "react-native-masked-text";
 import styles from "../style/MainStyle";
+import usuarioService from "../Services/UsuarioService";
 
 export default function Cadastro({ navigation }) {
   const [email, setEmail] = useState(null);
   const [nome, setNome] = useState(null);
   const [cpf, setCpf] = useState(null);
+  const [senha, setSenha] = useState(null);
   const [telefone, setTelefone] = useState(null);
   const [isSelected, setSelected] = useState(false);
   const [errorEmail, setErrorEmail] = useState(null);
   const [errorNome, setErrorNome] = useState(null);
   const [errorCpf, setErrorCpf] = useState(null);
   const [errorTelefone, setErrorTelefone] = useState(null);
+  const [errorSenha, setErrorSenha] = useState(null)
 
   const [isLoading, setLoading] = useState(false);
 
@@ -42,6 +45,7 @@ export default function Cadastro({ navigation }) {
     setErrorEmail(null);
     setErrorCpf(null);
     setErrorNome(null);
+    setErrorSenha(null);
     setErrorTelefone(null);
 
     const re =
@@ -54,13 +58,17 @@ export default function Cadastro({ navigation }) {
       setErrorNome("Preencha seu NOME corretamente");
       error = true;
     }
-    if (!cpfField.isValid()){
-      setErrorCpf("Preencha seu CPF corretamente")
-      error = true
+    if (!cpfField.isValid()) {
+      setErrorCpf("Preencha seu CPF corretamente");
+      error = true;
     }
     if (telefone == null) {
       setErrorTelefone("Preencha seu TELEFONE corretamente");
       error = true;
+    }
+    if (senha == null){
+      setErrorSenha("Preencha a senha")
+      error = true
     }
 
     return !error;
@@ -68,7 +76,31 @@ export default function Cadastro({ navigation }) {
 
   const salvar = () => {
     if (validar()) {
-      
+
+      setLoading(true)
+      let data = {
+        email: email,
+        cpf: cpf,
+        nome: nome,
+        telefone: telefone,
+        senha: senha
+      };
+      usuarioService
+        .cadastrar(data)
+        .then((response) => {
+          setLoading(false);
+          console.log(response.data);
+          const titulo = response.data.status ? "Sucesso" : "Erro";
+          showDialog(titulo, response.data.mensagem, "SUCESSO");
+          //Alert.alert(titulo, response.data.mensagem)
+        })
+        .catch((error) => {
+          setLoading(false);
+          showDialog("Erro", "Houve um erro inesperado", "ERRO");
+          console.log(error);
+          console.log("Deu erro");
+          //Alert.alert("Erro", "Houve um erro inesperado")
+        });
     }
   };
 
@@ -107,10 +139,10 @@ export default function Cadastro({ navigation }) {
             placeholder="CPF"
             keyboardType="number-pad"
             style={styles.maskedInput}
-            ref={(ref) => cpfField = ref}
+            ref={(ref) => (cpfField = ref)}
             eturnKeyType="done"
             onChangeText={(value) => setCpf(value)}
-        />
+          />
         </View>
         <Text style={styles.errorMessage}>{errorCpf}</Text>
 
@@ -126,47 +158,61 @@ export default function Cadastro({ navigation }) {
             keyboardType="phone-pad"
             returnKeyType="done"
             style={styles.maskedInput}
-            ref={(ref) => telefoneField = ref}
+            ref={(ref) => (telefoneField = ref)}
             onChangeText={(value) => setTelefone(value)}
           />
         </View>
         <Text style={styles.errorMessage}>{errorTelefone}</Text>
 
+        <Input
+        placeholder="Senha"
+        onChangeText={value => setSenha(value)}
+        errorMessage={errorSenha}
+        secureTextEntry={true}
+        />
+
         <View style={styles.checkboxContainer}>
-        <CheckBox
-          title="Aceito os termos de uso"
-          checkedIcon="check"
-          uncheckedIcon="square-o"
-          checkedColor="green"
-          uncheckedColor="red"
-          checked={isSelected}
-          onPress={() => setSelected(!isSelected)}
-        />
+          <CheckBox
+            title="Aceito os termos de uso"
+            checkedIcon="check"
+            uncheckedIcon="square-o"
+            checkedColor="green"
+            uncheckedColor="red"
+            checked={isSelected}
+            onPress={() => setSelected(!isSelected)}
+          />
         </View>
-        <Button
-          title="Salvar"
-          onPress={() => salvar()}
-          icon={{
-            name: "check",
-            type: "font-awesome",
-            size: 15,
-            color: "white",
-          }}
-          iconContainerStyle={{ marginRight: 10 }}
-          titleStyle={{ fontWeight: "700" }}
-          buttonStyle={{
-            backgroundColor: "rgba(90, 154, 230, 1)",
-            borderColor: "transparent",
-            borderWidth: 0,
-            borderRadius: 30,
-            marginTop: 10,
-          }}
-          containerStyle={{
-            width: 200,
-            marginHorizontal: 85,
-            marginVertical: 10,
-          }}
-        />
+
+        { isLoading && 
+           <Text>Carregando...</Text>
+        }
+
+        {!isLoading && (
+          <Button
+            title="Salvar"
+            onPress={() => salvar()}
+            icon={{
+              name: "check",
+              type: "font-awesome",
+              size: 15,
+              color: "white",
+            }}
+            iconContainerStyle={{ marginRight: 10 }}
+            titleStyle={{ fontWeight: "700" }}
+            buttonStyle={{
+              backgroundColor: "rgba(90, 154, 230, 1)",
+              borderColor: "transparent",
+              borderWidth: 0,
+              borderRadius: 30,
+              marginTop: 10,
+            }}
+            containerStyle={{
+              width: 200,
+              marginHorizontal: 85,
+              marginVertical: 10,
+            }}
+          />
+        )}
       </ScrollView>
     </KeyboardAvoidingView>
   );
