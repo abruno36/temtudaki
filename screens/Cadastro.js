@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { StyleSheet, View, StatusBar } from "react-native";
+import { StyleSheet, View, StatusBar, Alert } from "react-native";
 import { Input, CheckBox, Text, Button } from "react-native-elements";
 import { KeyboardAvoidingView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { TextInputMask } from "react-native-masked-text";
 import styles from "../style/MainStyle";
+import CustomDialog from '../components/CustomDialog';
 import usuarioService from "../Services/UsuarioService";
+
 
 export default function Cadastro({ navigation }) {
   const [email, setEmail] = useState(null);
@@ -18,11 +20,13 @@ export default function Cadastro({ navigation }) {
   const [errorNome, setErrorNome] = useState(null);
   const [errorCpf, setErrorCpf] = useState(null);
   const [errorTelefone, setErrorTelefone] = useState(null);
-  const [errorSenha, setErrorSenha] = useState(null)
+  const [errorSenha, setErrorSenha] = useState(null);
 
   const [isLoading, setLoading] = useState(false);
 
   const [visibleDialog, setVisibleDialog] = useState(false);
+  const [visible, setVisible] = React.useState(false);
+  
   const [titulo, setTitulo] = useState(null);
   const [mensagem, setMensagem] = useState(null);
   const [tipo, setTipo] = useState(null);
@@ -40,6 +44,7 @@ export default function Cadastro({ navigation }) {
   const hideDialog = (status) => {
     setVisibleDialog(status);
   };
+
   const validar = () => {
     let error = false;
     setErrorEmail(null);
@@ -66,9 +71,9 @@ export default function Cadastro({ navigation }) {
       setErrorTelefone("Preencha seu TELEFONE corretamente");
       error = true;
     }
-    if (senha == null){
-      setErrorSenha("Preencha a senha")
-      error = true
+    if (senha == null) {
+      setErrorSenha("Preencha a senha");
+      error = true;
     }
 
     return !error;
@@ -76,30 +81,26 @@ export default function Cadastro({ navigation }) {
 
   const salvar = () => {
     if (validar()) {
-
-      setLoading(true)
+      setLoading(true);
       let data = {
         email: email,
         cpf: cpf,
         nome: nome,
         telefone: telefone,
-        senha: senha
+        senha: senha,
       };
       usuarioService
         .cadastrar(data)
         .then((response) => {
           setLoading(false);
-          console.log(response.data);
-          const titulo = response.data.status ? "Sucesso" : "Erro";
-          showDialog(titulo, response.data.mensagem, "SUCESSO");
-          //Alert.alert(titulo, response.data.mensagem)
+          const titulo = response.data.status ? "Sucesso!" : "Erro!";
+          showDialog(titulo, response.data.mensagem, "SUCESSO!");
+          //Alert.alert(titulo, response.data.mensagem);
         })
         .catch((error) => {
           setLoading(false);
-          showDialog("Erro", "Houve um erro inesperado", "ERRO");
-          console.log(error);
-          console.log("Deu erro");
-          //Alert.alert("Erro", "Houve um erro inesperado")
+          showDialog("Erro!", "Houve um erro inesperado", "ERRO!");
+          //Alert.alert("Erro!", "Houve um erro inesperado");
         });
     }
   };
@@ -165,10 +166,10 @@ export default function Cadastro({ navigation }) {
         <Text style={styles.errorMessage}>{errorTelefone}</Text>
 
         <Input
-        placeholder="Senha"
-        onChangeText={value => setSenha(value)}
-        errorMessage={errorSenha}
-        secureTextEntry={true}
+          placeholder="Senha"
+          onChangeText={(value) => setSenha(value)}
+          errorMessage={errorSenha}
+          secureTextEntry={true}
         />
 
         <View style={styles.checkboxContainer}>
@@ -183,9 +184,7 @@ export default function Cadastro({ navigation }) {
           />
         </View>
 
-        { isLoading && 
-           <Text>Carregando...</Text>
-        }
+        {isLoading && <Text>Carregando...</Text>}
 
         {!isLoading && (
           <Button
@@ -213,6 +212,10 @@ export default function Cadastro({ navigation }) {
             }}
           />
         )}
+
+          { visibleDialog && 
+            <CustomDialog titulo={titulo} mensagem={mensagem} tipo={tipo} visible={visibleDialog} onClose={hideDialog}></CustomDialog>
+          }
       </ScrollView>
     </KeyboardAvoidingView>
   );
