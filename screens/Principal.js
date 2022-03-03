@@ -1,10 +1,17 @@
 import * as React from 'react';
-import { Text, View, Button } from 'react-native';
+import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Button } from 'react-native-elements';
 
-
+const logout = (navigation) => {
+  navigation.reset({
+    index: 0,
+    routes: [{name: "Login"}]
+  })
+}
 
 function Feed() {
   return (
@@ -15,10 +22,33 @@ function Feed() {
   );
 }
 
-function Profile() {
+function Profile({navigation}) {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Profile!</Text>
+      <Button
+          title="Sair"
+          onPress={() => logout(navigation)}
+          icon={{
+            name: "check",
+            type: "font-awesome",
+            size: 15,
+            color: "white",
+          }}
+          iconContainerStyle={{ marginRight: 10 }}
+          titleStyle={{ fontWeight: "700" }}
+          buttonStyle={{
+            backgroundColor: "rgba(90, 154, 230, 1)",
+            borderColor: "transparent",
+            borderWidth: 0,
+            borderRadius: 30,
+          }}
+          containerStyle={{
+            width: 200,
+            marginHorizontal: 85,
+            marginVertical: 10,
+          }}
+        />
     </View>
   );
 }
@@ -73,7 +103,10 @@ export default function Principal() {
         }}
       />
      
+     
     </Tab.Navigator>
+
+    
     
   );
 }

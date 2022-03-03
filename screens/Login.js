@@ -1,10 +1,13 @@
-import React, { useState } from "react";
-import { StyleSheet, View, StatusBar } from "react-native";
+import React, { useState, useEffect  } from "react";
+import { StyleSheet, View, StatusBar, Alert } from "react-native";
 import { Input, Text, Button } from "react-native-elements";
 import { Icon } from "react-native-vector-icons/FontAwesome";
 import { KeyboardAvoidingView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import styles from '../style/MainStyle';
+import usuarioService from "../Services/UsuarioService";
+import { ActivityIndicator } from "react-native-paper";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login({navigation}) {
   const [email, setEmail] = useState(null);
@@ -13,6 +16,7 @@ export default function Login({navigation}) {
   const [errorPassword, setErrorPassword] = useState(null);
 
   const [isLoading, setLoading] = useState(false);
+  const [isLoadingToken, setLoadingToken] = useState(true)
 
   const [visibleDialog, setVisibleDialog] = useState(false);
   const [titulo, setTitulo] = useState(null);
@@ -47,11 +51,44 @@ export default function Login({navigation}) {
   
   const entrar = () => {
     if (validar()) {
-        navigation.reset({
+      let data = {
+      username: email,
+      password: password
+      };
+      usuarioService
+        .login(data)
+        .then((response) => {
+          setLoading(false);
+          navigation.reset({
+              index: 0,
+              routes: [{name: "Principal"}]
+          })
+        })
+        .catch((error) => {
+          setLoading(false)
+          Alert.alert("Usuário não existe!")
+          //showDialog("Erro!", "Houve um erro inesperado", "ERRO!");
+      })
+    }
+  }
+
+  const logarComToken = (token) => {
+    setLoadingToken(true)
+    let data = {
+      token: token
+    }
+    
+    usuarioService.loginComToken(data)
+    .then((response) => {
+      setLoadingToken(false)
+      navigation.reset({
         index: 0,
         routes: [{name: "Principal"}]
       })
-    }
+    })
+    .catch((error) => {
+      setLoadingToken(false)      
+    })
   }
 
   const cadastrar = () => {
@@ -60,12 +97,24 @@ export default function Login({navigation}) {
     }
   }
 
+  useEffect(() => {
+    AsyncStorage.getItem("TOKEN").then((token) => {
+      logarComToken(token)
+    })
+  }, [])
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS == "ios" ? "padding" : "height"}
       style={[styles.container, specificStyle.specificContainer]}
-      keyboardVerticalOffset={80}
-    >
+      keyboardVerticalOffset={80}>
+
+      { isLoadingToken && 
+        <Text>Só um minutinho...</Text> 
+      }
+      
+      { !isLoadingToken && 
+      <>
       <ScrollView style={{ width: "100%" }}>
        <StatusBar
             barStyle = "light-content"
@@ -92,29 +141,33 @@ export default function Login({navigation}) {
         errorMessage={errorPassword}
       />
 
-      <Button
-        title="Entrar"
-        onPress={() => entrar()}
-        icon={{
-          name: "check",
-          type: "font-awesome",
-          size: 15,
-          color: "white",
-        }}
-        iconContainerStyle={{ marginRight: 10 }}
-        titleStyle={{ fontWeight: "700" }}
-        buttonStyle={{
-          backgroundColor: "rgba(90, 154, 230, 1)",
-          borderColor: "transparent",
-          borderWidth: 0,
-          borderRadius: 30,
-        }}
-        containerStyle={{
-          width: 200,
-          marginHorizontal: 85,
-          marginVertical: 10,
-        }}
-      />
+      {isLoading && <ActivityIndicator/>}
+
+      {!isLoading &&
+        <Button
+          title="Entrar"
+          onPress={() => entrar()}
+          icon={{
+            name: "check",
+            type: "font-awesome",
+            size: 15,
+            color: "white",
+          }}
+          iconContainerStyle={{ marginRight: 10 }}
+          titleStyle={{ fontWeight: "700" }}
+          buttonStyle={{
+            backgroundColor: "rgba(90, 154, 230, 1)",
+            borderColor: "transparent",
+            borderWidth: 0,
+            borderRadius: 30,
+          }}
+          containerStyle={{
+            width: 200,
+            marginHorizontal: 85,
+            marginVertical: 10,
+          }}
+        />
+      }
 
       <Button
         title="Cadastrar"
@@ -139,7 +192,11 @@ export default function Login({navigation}) {
           marginVertical: 10,
         }}
       />
+   
      </ScrollView>
+     </>
+    }
+    
     </KeyboardAvoidingView>
   );
 }
