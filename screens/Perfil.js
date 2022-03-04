@@ -3,6 +3,7 @@ import { Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Button } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert } from 'react-native';
 
 export default function Perfil({navigation}) {
 
@@ -22,27 +23,15 @@ export default function Perfil({navigation}) {
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>Profile!</Text>
         <Button
+            icon={
+              <Icon
+                name="check"
+                size={15}
+                color="white"
+              />
+            }
             title="Sair"
             onPress={() => logout(navigation)}
-            icon={{
-              name: "check",
-              type: "font-awesome",
-              size: 15,
-              color: "white",
-            }}
-            iconContainerStyle={{ marginRight: 10 }}
-            titleStyle={{ fontWeight: "700" }}
-            buttonStyle={{
-              backgroundColor: "rgba(90, 154, 230, 1)",
-              borderColor: "transparent",
-              borderWidth: 0,
-              borderRadius: 30,
-            }}
-            containerStyle={{
-              width: 200,
-              marginHorizontal: 85,
-              marginVertical: 10,
-            }}
           />
       </View>
     );
