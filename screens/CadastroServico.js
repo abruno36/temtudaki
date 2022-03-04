@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Alert } from 'react-native';
 import { KeyboardAvoidingView } from 'react-native';
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import servicoService from '../services/ServicoService';
+import servicoService from '../Services/ServicoService';
 import styles from '../style/MainStyle';
+
+
 export default function CadastroServico() {
   const [titulo, setTitulo] = useState(null)
   const [descricao, setDescricao] = useState(null)
@@ -19,12 +20,13 @@ export default function CadastroServico() {
     setErrorTitulo(null)
     setErrorDescricao(null)
     
-    if (titulo.length < 5){
-      setErrorTitulo("Digite pelo menos 5 letras no título")
+    if (!titulo || titulo.length < 5 ){
+      setErrorTitulo("Título obrigatório e deve ser maior que 5")
       error = true
     }
-    if (descricao.length < 20){
-      setErrorDescricao("Digite pelo menos 20 letras na descrição")
+
+    if (!descricao || descricao.length < 20 ){
+      setErrorDescricao("Descrição obrigatória e deve ser maior que 20")
       error = true
     }
 
@@ -60,8 +62,7 @@ export default function CadastroServico() {
         style={[styles.container]}
         keyboardVerticalOffset={80}>
       <ScrollView style={{width: "100%"}}>
-      <Text h3>Cadastre-se</Text>
-      
+           
       <Input
         placeholder="Título do serviço"
         onChangeText={value => {
@@ -86,31 +87,54 @@ export default function CadastroServico() {
 
     { !isLoading && 
       <>
-      <Button
-        icon={
-          <Icon
-            name="check"
-            size={15}
-            color="white"
+       <Button
+            title="Salvar"
+            onPress={() => salvar()}
+            icon={{
+              name: "check",
+              type: "font-awesome",
+              size: 15,
+              color: "white",
+            }}
+            iconContainerStyle={{ marginRight: 10 }}
+            titleStyle={{ fontWeight: "700" }}
+            buttonStyle={{
+              backgroundColor: "rgba(90, 154, 230, 1)",
+              borderColor: "transparent",
+              borderWidth: 0,
+              borderRadius: 30,
+              marginTop: 10,
+            }}
+            containerStyle={{
+              width: 200,
+              marginHorizontal: 100,
+              marginVertical: 10,
+            }}
           />
-        }
-        title="Salvar"
-        buttonStyle={styles.button}
-        onPress={() => salvar()}
-      />
-
-      <Button
-        icon={
-          <Icon
-            name="stop"
-            size={15}
-            color="white"
+        <Button
+            title="Cancelar"
+            onPress={() => cancelar()}
+            icon={{
+              name: "stop",
+              type: "font-awesome",
+              size: 15,
+              color: "white",
+            }}
+            iconContainerStyle={{ marginRight: 10 }}
+            titleStyle={{ fontWeight: "700" }}
+            buttonStyle={{
+              backgroundColor: "red",
+              borderColor: "transparent",
+              borderWidth: 0,
+              borderRadius: 30,
+              marginTop: 2,
+            }}
+            containerStyle={{
+              width: 200,
+              marginHorizontal: 100,
+              marginVertical: 10,
+            }}
           />
-        }
-        title="Cancelar"
-        buttonStyle={[styles.button, styles.cancelButton]}
-        onPress={() => cancelar()}
-      />
       </>
     }
 

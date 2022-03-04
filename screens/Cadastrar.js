@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import styles from '../style/MainStyle';
 export default function Cadastrar({navigation}) {
 
     function cadastrarServico(){
@@ -17,29 +15,55 @@ export default function Cadastrar({navigation}) {
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>O que você quer cadastrar?</Text>
         <Button
-            icon={
-              <Icon
-                name="child"
-                size={15}
-                color="white"
-              />
-            }
-            style={styles.button}
-            title=" Cadastrar serviço"
+            title="Cadastrar Serviço"
             onPress={() => cadastrarServico()}
+            icon={{
+              name: "child",
+              type: "font-awesome",
+              size: 15,
+              color: "white",
+            }}
+            iconContainerStyle={{ marginRight: 10 }}
+            titleStyle={{ fontWeight: "700" }}
+            buttonStyle={{
+              backgroundColor: "rgba(90, 154, 230, 1)",
+              borderColor: "transparent",
+              borderWidth: 0,
+              borderRadius: 30,
+              marginTop: 10,
+            }}
+            containerStyle={{
+              width: 200,
+              marginHorizontal: 100,
+              marginVertical: 10,
+            }}
           />
         <Button
-            icon={
-              <Icon
-                name="shopping-bag"
-                size={15}
-                color="white"
-              />
-            }
-            title=" Cadastrar produto"
-            style={styles.button}
+            title="Cadastrar Produto"
             onPress={() => cadastrarProduto()}
+            icon={{
+              name: "shopping-bag",
+              type: "font-awesome",
+              size: 15,
+              color: "white",
+            }}
+            iconContainerStyle={{ marginRight: 10 }}
+            titleStyle={{ fontWeight: "700" }}
+            buttonStyle={{
+              backgroundColor: "green",
+              borderColor: "transparent",
+              borderWidth: 0,
+              borderRadius: 30,
+              marginTop: 2,
+            }}
+            containerStyle={{
+              width: 200,
+              marginHorizontal: 100,
+              marginVertical: 10,
+            }}
           />
+       
+       
       </View>
     );
   }
