@@ -38,6 +38,7 @@ function defineInterceptor(){
           .then((res) => {
             AsyncStorage.setItem("TOKEN", res.data.access_token)
             originalReq.headers["Authorization"] = `Bearer ${res.data.access_token}`
+            console.log(originalReq)
             return axios(originalReq)
           })
           resolve(res)
