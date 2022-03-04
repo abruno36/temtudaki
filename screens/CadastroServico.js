@@ -8,7 +8,7 @@ import servicoService from '../Services/ServicoService';
 import styles from '../style/MainStyle';
 
 
-export default function CadastroServico() {
+export default function CadastroServico({navigation}) {
   const [titulo, setTitulo] = useState(null)
   const [descricao, setDescricao] = useState(null)
   const [errorTitulo, setErrorTitulo] = useState(null)
@@ -31,6 +31,11 @@ export default function CadastroServico() {
     }
 
     return !error
+  }
+
+  const cancelar = () => {
+       navigation.navigate("Cadastrar")
+  
   }
 
   const salvar = () => {

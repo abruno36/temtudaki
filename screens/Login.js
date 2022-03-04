@@ -1,7 +1,6 @@
 import React, { useState, useEffect  } from "react";
-import { StyleSheet, View, StatusBar, Alert } from "react-native";
+import { StyleSheet, StatusBar, Alert } from "react-native";
 import { Input, Text, Button } from "react-native-elements";
-import { Icon } from "react-native-vector-icons/FontAwesome";
 import { KeyboardAvoidingView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import styles from '../style/MainStyle';
