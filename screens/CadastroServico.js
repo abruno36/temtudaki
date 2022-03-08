@@ -69,6 +69,7 @@ export default function CadastroServico({navigation}) {
       <ScrollView style={{width: "100%"}}>
            
       <Input
+        style={{marginTop: 60}}
         placeholder="Título do serviço"
         onChangeText={value => {
             setTitulo(value)
@@ -104,11 +105,11 @@ export default function CadastroServico({navigation}) {
             iconContainerStyle={{ marginRight: 10 }}
             titleStyle={{ fontWeight: "700" }}
             buttonStyle={{
-              backgroundColor: "rgba(90, 154, 230, 1)",
+              backgroundColor: "rgba(44, 191, 154, 1)",
               borderColor: "transparent",
               borderWidth: 0,
               borderRadius: 30,
-              marginTop: 10,
+              marginTop: 30,
             }}
             containerStyle={{
               width: 200,
@@ -128,7 +129,7 @@ export default function CadastroServico({navigation}) {
             iconContainerStyle={{ marginRight: 10 }}
             titleStyle={{ fontWeight: "700" }}
             buttonStyle={{
-              backgroundColor: "red",
+              backgroundColor: "rgba(220,20,60, 1)",
               borderColor: "transparent",
               borderWidth: 0,
               borderRadius: 30,

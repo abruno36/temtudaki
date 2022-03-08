@@ -1,5 +1,5 @@
 import React, { useState, useEffect  } from "react";
-import { StyleSheet, StatusBar, Alert } from "react-native";
+import { StyleSheet, StatusBar, Alert, Image } from "react-native";
 import { Input, Text, Button } from "react-native-elements";
 import { KeyboardAvoidingView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -91,9 +91,9 @@ export default function Login({navigation}) {
   }
 
   const cadastrar = () => {
-    if (validar()) {
+    
       navigation.navigate("Cadastro")
-    }
+    
   }
 
   useEffect(() => {
@@ -108,6 +108,7 @@ export default function Login({navigation}) {
       style={[styles.container, specificStyle.specificContainer]}
       keyboardVerticalOffset={80}>
 
+      
       { isLoadingToken && 
         <Text>Só um minutinho...</Text> 
       }
@@ -123,6 +124,7 @@ export default function Login({navigation}) {
             translucent = {false}
             networkActivityIndicatorVisible = {true}
         />
+      <Image style={styles.img} source={require('../assets/logo.png')}/>
       <Text style={styles.text} h4>
         Entrar no TemTudaki
       </Text>
@@ -155,7 +157,7 @@ export default function Login({navigation}) {
           iconContainerStyle={{ marginRight: 10 }}
           titleStyle={{ fontWeight: "700" }}
           buttonStyle={{
-            backgroundColor: "rgba(90, 154, 230, 1)",
+            backgroundColor: "rgba(44, 191, 154, 1)",
             borderColor: "transparent",
             borderWidth: 0,
             borderRadius: 30,
@@ -169,7 +171,7 @@ export default function Login({navigation}) {
       }
 
       <Button
-        title="Cadastrar"
+        title="Criar conta gratuita"
         onPress={() => cadastrar()}
         icon={{
           name: "user",
@@ -180,7 +182,7 @@ export default function Login({navigation}) {
         iconContainerStyle={{ marginRight: 10 }}
         titleStyle={{ fontWeight: "700" }}
         buttonStyle={{
-          backgroundColor: "rgba(90, 154, 230, 1)",
+          backgroundColor: "rgba(44, 191, 154, 1)",
           borderColor: "transparent",
           borderWidth: 0,
           borderRadius: 30,

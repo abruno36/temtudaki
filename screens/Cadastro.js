@@ -199,7 +199,7 @@ export default function Cadastro({ navigation }) {
             iconContainerStyle={{ marginRight: 10 }}
             titleStyle={{ fontWeight: "700" }}
             buttonStyle={{
-              backgroundColor: "rgba(90, 154, 230, 1)",
+              backgroundColor: "rgba(44, 191, 154, 1)",
               borderColor: "transparent",
               borderWidth: 0,
               borderRadius: 30,

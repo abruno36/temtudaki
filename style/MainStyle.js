@@ -60,6 +60,11 @@ const styles = StyleSheet.create({
       marginLeft: "auto",
       marginRight: "auto",
     },
+    img: {
+      marginHorizontal: 130,
+      marginTop: 30,
+      marginBottom: 30
+    }
   });
 
 export default styles

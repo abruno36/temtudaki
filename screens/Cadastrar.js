@@ -26,7 +26,7 @@ export default function Cadastrar({navigation}) {
             iconContainerStyle={{ marginRight: 10 }}
             titleStyle={{ fontWeight: "700" }}
             buttonStyle={{
-              backgroundColor: "rgba(90, 154, 230, 1)",
+              backgroundColor: "rgba(60,179,113, 1)",
               borderColor: "transparent",
               borderWidth: 0,
               borderRadius: 30,
@@ -50,7 +50,7 @@ export default function Cadastrar({navigation}) {
             iconContainerStyle={{ marginRight: 10 }}
             titleStyle={{ fontWeight: "700" }}
             buttonStyle={{
-              backgroundColor: "green",
+              backgroundColor: "rgba(46,139,87, 1)",
               borderColor: "transparent",
               borderWidth: 0,
               borderRadius: 30,
